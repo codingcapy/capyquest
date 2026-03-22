@@ -1,0 +1,17 @@
+import { pgTable, varchar, timestamp, integer } from "drizzle-orm/pg-core";
+import type { InferSelectModel } from "drizzle-orm";
+
+export const users = pgTable("users", {
+  userId: varchar("user_id").primaryKey(),
+  username: varchar("username").notNull(),
+  email: varchar("email").notNull().unique(),
+  password: varchar("password").notNull(),
+  profilePic: varchar("profile_pic"),
+  role: varchar("role").default("member").notNull(),
+  status: varchar("status").default("active").notNull(),
+  preference: varchar("preference").default("light").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  currentChar: integer("current_char").default(0).notNull(),
+});
+
+export type User = InferSelectModel<typeof users>;
